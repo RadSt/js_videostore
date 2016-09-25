@@ -7,7 +7,6 @@ function statement(customer, movies) {
   for (let rental of customer.rentals) {
     result += `\t${getMovie(rental).title}\t${getAmount(rental)}\n`;
   }
-
   result += addFooterLines(getTotalAmount(customer), getFrequentTotalRenterPoints(customer));
   return result;
 
