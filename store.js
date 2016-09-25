@@ -5,9 +5,9 @@ function statement(customer, movies) {
   let frequentTotalRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
-    let movie = movies[rental.movieID];
+    let movie = getMovie(rental);
 
-    let thisAmount = getAmount(movie, rental);
+    let thisAmount = getAmount(rental);
 
     //add frequent renter points
     frequentTotalRenterPoints++;
@@ -23,8 +23,9 @@ function statement(customer, movies) {
   result += `You earned ${frequentTotalRenterPoints} frequent renter points\n`;
   return result;
 
-  function getAmount(movie, rental){
+  function getAmount(rental){
     let thisAmount = 0;
+    let movie = getMovie(rental);
 
     switch (movie.code) {
       case "regular":
@@ -38,6 +39,10 @@ function statement(customer, movies) {
         break;
     }
     return thisAmount;
+  }
+
+  function getMovie(rental){
+    return movies[rental.movieID];
   }
 }
 
