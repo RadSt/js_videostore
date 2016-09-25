@@ -1,6 +1,6 @@
 "use strict";
 
-function statement(customer, movies) {
+function statementText(customer, movies) {
 
   let result = `Rental Record for ${customer.name}\n`;
 
@@ -9,7 +9,20 @@ function statement(customer, movies) {
   }
   result += addFooterLines(getTotalAmount(customer, movies), getFrequentTotalRenterPoints(customer, movies));
   return result;
+}
+
+function statementHtml(customer, movies) {
+
+  let result = `<h1>Rental Record for ${customer.name}</h1>\n`;
+  result += '<table>\n';
+  for (let rental of customer.rentals) {
+    result += `<tr><td>${getMovie(rental, movies).title}</td><td>${getAmount(rental, movies)}</td></tr>\n`;
   }
+  result += '</table>\n';
+  result += `<p>Amount owed is<em>${getTotalAmount(customer, movies)}</em></p>\n`;
+  result += `<p>You earned<em>${getFrequentTotalRenterPoints(customer, movies)}</em></p>\n`;
+  return result;
+}
 
 function getMovie(rental, movies){
   return movies[rental.movieID];
@@ -83,4 +96,5 @@ let movies = {
   // etc
 };
 
-console.log(statement(customer, movies));
+console.log(statementText(customer, movies));
+console.log(statementHtml(customer, movies));
