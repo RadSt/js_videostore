@@ -1,19 +1,18 @@
 "use strict";
 
 function statement(customer, movies) {
-  let totalAmount = 0;
+
   let frequentTotalRenterPoints;
   let result = `Rental Record for ${customer.name}\n`;
-  
+
   for (let rental of customer.rentals) {
     frequentTotalRenterPoints =+ getFrequentTotalRenterPoints(rental);
   }
   for (let rental of customer.rentals) {
     result += `\t${getMovie(rental).title}\t${getAmount(rental)}\n`;
   }
-  for (let rental of customer.rentals) {
-    totalAmount += getAmount(rental);
-  }
+
+  let totalAmount = getTotalAmount(customer);
 
   result += addFooterLines(totalAmount, frequentTotalRenterPoints);
   return result;
@@ -48,6 +47,15 @@ function statement(customer, movies) {
     result += `Amount owed is ${totalAmount}\n`;
     result += `You earned ${frequentTotalRenterPoints} frequent renter points\n`;
     return result;
+  }
+
+  function getTotalAmount(customer){
+    let totalAmount = 0;
+    for (let rental of customer.rentals) {
+
+      totalAmount += getAmount(rental);
+    }
+    return totalAmount;
   }
 }
 
