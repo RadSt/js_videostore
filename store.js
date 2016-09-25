@@ -4,13 +4,17 @@ function statement(customer, movies) {
   let totalAmount = 0;
   let frequentTotalRenterPoints;
   let result = `Rental Record for ${customer.name}\n`;
+  
   for (let rental of customer.rentals) {
     frequentTotalRenterPoints =+ getFrequentTotalRenterPoints(rental);
-    //print figures for this rental
+  }
+  for (let rental of customer.rentals) {
     result += `\t${getMovie(rental).title}\t${getAmount(rental)}\n`;
+  }
+  for (let rental of customer.rentals) {
     totalAmount += getAmount(rental);
   }
-  // add footer lines
+
   result += addFooterLines(totalAmount, frequentTotalRenterPoints);
   return result;
 
