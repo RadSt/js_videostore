@@ -5,7 +5,7 @@ function statement(customer, movies) {
   let result = `Rental Record for ${customer.name}\n`;
 
   for (let rental of customer.rentals) {
-    result += `\t${getMovie(rental).title}\t${getAmount(rental)}\n`;
+    result += `\t${getMovie(rental, movies).title}\t${getAmount(rental)}\n`;
   }
   result += addFooterLines(getTotalAmount(customer), getFrequentTotalRenterPoints(customer));
   return result;
@@ -13,7 +13,7 @@ function statement(customer, movies) {
   function getAmount(rental){
     let thisAmount = 0;
 
-    switch (getMovie(rental).code) {
+    switch (getMovie(rental, movies).code) {
       case "regular":
         thisAmount = 2;
         if (rental.days > 2) {
@@ -27,12 +27,8 @@ function statement(customer, movies) {
     return thisAmount;
   }
 
-  function getMovie(rental){
-    return movies[rental.movieID];
-  }
-
   function getFrequentRenterPoints(rental){
-    return (getMovie(rental).code === "new" && rental.days > 2) ? 2 : 1;
+    return (getMovie(rental, movies).code === "new" && rental.days > 2) ? 2 : 1;
   }
 
   function addFooterLines(totalAmount, frequentTotalRenterPoints){
@@ -58,6 +54,10 @@ function statement(customer, movies) {
     }
     return frequentTotalRenterPoints;
   }
+}
+
+function getMovie(rental, movies){
+  return movies[rental.movieID];
 }
 
 let customer = {
