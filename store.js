@@ -7,17 +7,8 @@ function statement(customer, movies) {
   for (let rental of customer.rentals) {
     result += `\t${getMovie(rental, movies).title}\t${getAmount(rental, movies)}\n`;
   }
-  result += addFooterLines(_getTotalAmount(customer), _getFrequentTotalRenterPoints(customer));
+  result += addFooterLines(getTotalAmount(customer, movies), _getFrequentTotalRenterPoints(customer));
   return result;
-
-  function _getTotalAmount(customer){
-    let totalAmount = 0;
-    for (let rental of customer.rentals) {
-
-      totalAmount += getAmount(rental, movies);
-    }
-    return totalAmount;
-  }
 
   function _getFrequentTotalRenterPoints(customer){
     let frequentTotalRenterPoints = 0;
@@ -60,6 +51,14 @@ function addFooterLines(totalAmount, frequentTotalRenterPoints){
   return result;
 }
 
+function getTotalAmount(customer, movies){
+  let totalAmount = 0;
+  for (let rental of customer.rentals) {
+
+    totalAmount += getAmount(rental, movies);
+  }
+  return totalAmount;
+}
 
 let customer = {
   name: "martin",
